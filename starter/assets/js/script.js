@@ -88,7 +88,7 @@ function renderTasks() {
             <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                   <a href="#" class="list-group-item list-group-item-action d-flex">
                     <div class="me-3 fs-16px">
-                      <i class="far fa-question-circle text-gray-500 fa-fw"></i> 
+                        <i class="fas fa-spinner"></i>
                     </div>
                     <div class="flex-fill">
                       <div class="fs-14px lh-12 mb-2px fw-bold text-dark">${task.titre}</div>
@@ -111,7 +111,7 @@ function renderTasks() {
             <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                   <a href="#" class="list-group-item list-group-item-action d-flex">
                     <div class="me-3 fs-16px">
-                      <i class="far fa-question-circle text-gray-500 fa-fw"></i> 
+                      <i class="fa-regular fa-circle-check"></i>
                     </div>
                     <div class="flex-fill">
                       <div class="fs-14px lh-12 mb-2px fw-bold text-dark">${task.titre}</div>
