@@ -54,6 +54,8 @@ task_save_btn.addEventListener("submit", function(event) {
 
 });
 
+// pour loader les taches
+
 function renderTasks() {
   div_to_do.innerHTML = '';
   div_in_progress.innerHTML = '';
@@ -67,7 +69,7 @@ function renderTasks() {
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                 <a href="#" class="list-group-item list-group-item-action d-flex">
                   <div class="me-3 fs-16px">
-                    <i class="far fa-question-circle text-gray-500 fa-fw"></i> 
+                      <i class="far fa-question-circle text-gray-500 fa-fw"></i> 
                   </div>
                   <div class="flex-fill">
                     <div class="fs-14px lh-12 mb-2px fw-bold text-dark">${task.titre}</div>
@@ -81,10 +83,6 @@ function renderTasks() {
                     </div>
                   </div>
                   <div>
-                    <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;"></i>
-                    <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;"></i>
-                </div>
-                <div>
                       <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" onclick="editTask('${task.id}')"></i>
                       <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" onclick="deleteTask('${task.id}')"></i>
                     </div>
@@ -173,6 +171,36 @@ function deleteTask(taskId) {
           );
       }
   });
+}
+
+function editTask(taskId) {
+  const taskToEdit = array.find(task => task.id === taskId);
+  
+  if (taskToEdit) {
+    document.getElementById("task-id").value = taskToEdit.id;
+    document.getElementById("task-title").value = taskToEdit.titre;
+    document.getElementById("task-date").value = taskToEdit.date;
+    document.getElementById("task-description").value = taskToEdit.description;
+    
+    // Définir le type de tâche
+    if (taskToEdit.features === "Feature") {
+      document.getElementById("task-type-feature").checked = true;
+    } else {
+      document.getElementById("task-type-bug").checked = true;
+    }
+    
+    // Définir priorité et statut
+    document.getElementById("task-priority").value = taskToEdit.priority;
+    document.getElementById("task-status").value = taskToEdit.status;
+    
+    // Modifier le titre de la modal
+    document.querySelector('.modal-title').textContent = 'Edit Task';
+    document.querySelector('#task-save-btn').style.display = 'none'
+    // Afficher le modal
+    $('#form-modal').modal('show');
+  }
+
+
 }
 
 
