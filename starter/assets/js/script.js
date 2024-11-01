@@ -85,8 +85,8 @@ function renderTasks() {
                     <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;"></i>
                 </div>
                 <div>
-                      <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" class="edit"></i>
-                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" class="delete"></i>
+                      <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" onclick="editTask('${task.id}')"></i>
+                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" onclick="deleteTask('${task.id}')"></i>
                     </div>
                 </a>
               </div>
@@ -112,8 +112,8 @@ function renderTasks() {
                     </div>
                   </div>
                   <div>
-                      <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" class="edit"></i>
-                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" class="delete"></i>
+                      <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" onclick="editTask('${task.id}')"></i>
+                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" onclick="deleteTask('${task.id}')"></i>
                     </div>
                 </a>
               </div>
@@ -139,8 +139,8 @@ function renderTasks() {
                     </div>
                   </div>
                   <div>
-                      <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" class="edit"></i>
-                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" class="delete"></i>
+                      <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" onclick="editTask('${task.id}')"></i>
+                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" onclick="deleteTask('${task.id}')"></i>
                     </div>
                 </a>
               </div>
@@ -150,7 +150,30 @@ function renderTasks() {
   })
 }
 
+// Fonction pour supprimer une tâche
+function deleteTask(taskId) {
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+      if (result.isConfirmed) {
+          array = array.filter(task => task.id !== taskId);
+          renderTasks();
 
+          // SweetAlert pour confirmer la suppression
+          Swal.fire(
+              'Deleted!',
+              'Your task has been deleted.',
+              'success'
+          );
+      }
+  });
+}
 
 
 
