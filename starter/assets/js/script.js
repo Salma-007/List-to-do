@@ -16,6 +16,7 @@ let task_update_btn = document.getElementById("task-update-btn");
 let div_to_do = document.getElementById("to-do-tasks")
 let div_in_progress = document.getElementById("in-progress-tasks")
 let div_done = document.getElementById("done-tasks")
+
 let count_to_do 
 let count_in_progress 
 let count_done 
@@ -26,7 +27,6 @@ renderTasks()
 
 
 function addTask(titre, features,priority,status,date,description){
-  console.log("hello");
   
   let task = {
       id: Date.now().toString(),
@@ -51,9 +51,10 @@ function addTask(titre, features,priority,status,date,description){
   
 }
 
+// event onclick of add
 
 function ajouter() {
-  console.log("hellooo");
+
   if ($('#form-task').parsley().isValid()) {
 
   let titleValue = title.value.trim();
@@ -216,19 +217,20 @@ function editTask(taskId) {
   let taskToEdit = array.find(task => task.id === taskId);
   
   if (taskToEdit) {
+    
     document.getElementById("task-id").value = taskToEdit.id;
     title.value = taskToEdit.titre;
-    document.getElementById("task-date").value = taskToEdit.date;
-    document.getElementById("task-description").value = taskToEdit.description;
+    date.value = taskToEdit.date;
+    description.value = taskToEdit.description;
     
     if (taskToEdit.features === "Feature") {
-      document.getElementById("task-type-feature").checked = true;
+      feature.checked = true;
     } else {
-      document.getElementById("task-type-bug").checked = true;
+      bug.checked = true;
     }
     
-    document.getElementById("task-priority").value = taskToEdit.priority;
-    document.getElementById("task-status").value = taskToEdit.status;
+    priority.value = taskToEdit.priority;
+    slectedStatus.value = taskToEdit.status;
     
     document.querySelector('.modal-title').textContent = 'Edit Task';
     task_update_btn.style.display = 'block'
@@ -241,6 +243,7 @@ function editTask(taskId) {
 function editer() {
   event.preventDefault(); // Empêche la soumission du formulaire
 
+  
   let taskId = document.getElementById("task-id").value; 
   taskType = feature.checked ? "Feature" : (bug.checked ? "Bug" : "");
   
@@ -248,6 +251,7 @@ function editer() {
   
   if (taskIndex !== -1) {
 
+    if ($('#form-task').parsley().isValid()) {
       array[taskIndex] = {
           id: taskId,
           titre: title.value,
@@ -267,6 +271,14 @@ function editer() {
         confirmButtonText: 'Nice!'
       });
       $('#form-modal').modal('hide'); 
+    }
+    else{
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You didn't enter all the informations!",
+      });
+    } 
   }
   localStorage.setItem("MyStorage", JSON.stringify(array))
 }
