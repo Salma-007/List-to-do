@@ -17,9 +17,9 @@ let div_to_do = document.getElementById("to-do-tasks")
 let div_in_progress = document.getElementById("in-progress-tasks")
 let div_done = document.getElementById("done-tasks")
 
+let array = JSON.parse(localStorage.getItem("MyStorage")) || [];
+renderTasks()
 
-
-let array = [];
 
 function addTask(titre, features,priority,status,date,description){
   console.log("hello");
@@ -34,6 +34,7 @@ function addTask(titre, features,priority,status,date,description){
       description: description,
   }
   array.push(task)
+  localStorage.setItem("MyStorage", JSON.stringify(array))
   renderTasks();
   // SweetAlert pour confirmer l'ajout
   Swal.fire({
@@ -43,6 +44,7 @@ function addTask(titre, features,priority,status,date,description){
       confirmButtonText: 'Nice!'
   });
   $('#form-modal').modal('hide');
+  
 }
 
 
@@ -61,7 +63,7 @@ function ajouter() {
 
   addTask(titleValue, taskType, priorityValue, statusValue, dateValue, descriptionValue);
   document.getElementById("form-task").reset();
-  
+  localStorage.setItem("MyStorage", JSON.stringify(array))
 
 }
 
@@ -158,6 +160,7 @@ function renderTasks() {
       div_done.appendChild(div0)
       }
   })
+  localStorage.setItem("MyStorage", JSON.stringify(array))
 }
 
 // Fonction pour supprimer une tâche
@@ -183,6 +186,7 @@ function deleteTask(taskId) {
           );
       }
   });
+  localStorage.setItem("MyStorage", JSON.stringify(array))
 }
 
 function editTask(taskId) {
@@ -246,6 +250,7 @@ function editer() {
       });
       $('#form-modal').modal('hide'); 
   }
+  localStorage.setItem("MyStorage", JSON.stringify(array))
 }
 
 
