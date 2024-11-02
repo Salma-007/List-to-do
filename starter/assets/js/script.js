@@ -16,7 +16,9 @@ let task_update_btn = document.getElementById("task-update-btn");
 let div_to_do = document.getElementById("to-do-tasks")
 let div_in_progress = document.getElementById("in-progress-tasks")
 let div_done = document.getElementById("done-tasks")
-
+let count_to_do = 0
+let count_in_progress = 0
+let count_done = 0
 let array = JSON.parse(localStorage.getItem("MyStorage")) || [];
 renderTasks()
 
@@ -60,6 +62,8 @@ function ajouter() {
   let statusValue = slectedStatus.value;
   let dateValue = date.value;
   let descriptionValue = description.value;
+  
+
 
   addTask(titleValue, taskType, priorityValue, statusValue, dateValue, descriptionValue);
   document.getElementById("form-task").reset();
@@ -75,10 +79,11 @@ function renderTasks() {
   div_in_progress.innerHTML = '';
   div_done.innerHTML = '';
   array.forEach(task => {
+    
       
       let div0 = document.createElement('div')
       if(task.status == 'To Do'){
-      
+        count_to_do++
       div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                 <a href="#" class="list-group-item list-group-item-action d-flex">
@@ -103,9 +108,11 @@ function renderTasks() {
                 </a>
               </div>
       `
+
       div_to_do.appendChild(div0) }
 
       else if(task.status== 'In Progress'){
+        count_in_progress++
           div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                 <a href="#" class="list-group-item list-group-item-action d-flex">
@@ -133,6 +140,7 @@ function renderTasks() {
       div_in_progress.appendChild(div0)
       }
       else if(task.status== 'Done'){
+        count_done++
           div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                 <a href="#" class="list-group-item list-group-item-action d-flex">
@@ -269,3 +277,7 @@ function showForm(){
       document.querySelector('#task-save-btn').style.display = 'block'
       document.querySelector('#task-update-btn').style.display = 'none'
 }
+
+document.getElementById("to-do-tasks-count").innerHTML = `${count_to_do}`
+document.getElementById("in-progress-tasks-count").innerHTML = `${count_in_progress}`
+document.getElementById("done-tasks-count").innerHTML = `${count_done}`
