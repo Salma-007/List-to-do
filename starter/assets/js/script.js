@@ -1,21 +1,29 @@
+// form var
+let title = document.getElementById("task-title")
+let feature = document.getElementById('task-type-feature')
+let bug = document.getElementById('task-type-bug')
+
+let taskType = feature ? "Feature" : (bug ? "Bug" : "");
+let priority = document.getElementById("task-priority")
+let slectedStatus = document.getElementById("task-status")
+let date = document.getElementById("task-date")
+let description = document.getElementById("task-description")
+// form var
 
 let task_save_btn = document.getElementById("task-save-btn");
+let task_update_btn = document.getElementById("task-update-btn");
 
-let task_title =  document.getElementById("task-title")
-let taskTypeFeature = document.getElementById('task-type-feature');
-let taskTypeBug = document.getElementById('task-type-bug');
-let taskPrioritySelect = document.getElementById('task-priority');
-let taskStatusSelect = document.getElementById('task-status');
-let taskDate = document.getElementById('task-date');
-let taskDescription = document.getElementById('task-description');
 let div_to_do = document.getElementById("to-do-tasks")
 let div_in_progress = document.getElementById("in-progress-tasks")
 let div_done = document.getElementById("done-tasks")
 
+
+
 let array = [];
 
 function addTask(titre, features,priority,status,date,description){
-
+  console.log("hello");
+  
   let task = {
       id: Date.now().toString(),
       titre: titre,
@@ -38,22 +46,25 @@ function addTask(titre, features,priority,status,date,description){
 }
 
 
-function ajouter(event) {
+function ajouter() {
   console.log("hellooo");
 
-  let title = document.getElementById("task-title").value.trim();
-  let feature = document.getElementById('task-type-feature').checked;
-  let bug = document.getElementById('task-type-bug').checked;
+  let titleValue = title.value.trim();
+  let featureChecked = feature.checked;
+  let bugChecked = bug.checked;
 
-  let taskType = feature ? "Feature" : (bug ? "Bug" : "");
-  let priority = document.getElementById("task-priority").value;
-  let status = document.getElementById("task-status").value;
-  let date = document.getElementById("task-date").value;
-  let description = document.getElementById("task-description").value;
-  addTask(title, taskType, priority, status, date, description);
+  let taskType = featureChecked ? "Feature" : (bugChecked ? "Bug" : "");
+  let priorityValue = priority.value;
+  let statusValue = slectedStatus.value;
+  let dateValue = date.value;
+  let descriptionValue = description.value;
+
+  addTask(titleValue, taskType, priorityValue, statusValue, dateValue, descriptionValue);
   document.getElementById("form-task").reset();
+  
 
-};
+}
+
 
 // pour loader les taches
 
@@ -63,7 +74,7 @@ function renderTasks() {
   div_done.innerHTML = '';
   array.forEach(task => {
       
-      const div0 = document.createElement('div')
+      let div0 = document.createElement('div')
       if(task.status == 'To Do'){
       
       div0.innerHTML = `
@@ -175,11 +186,11 @@ function deleteTask(taskId) {
 }
 
 function editTask(taskId) {
-  const taskToEdit = array.find(task => task.id === taskId);
+  let taskToEdit = array.find(task => task.id === taskId);
   
   if (taskToEdit) {
     document.getElementById("task-id").value = taskToEdit.id;
-    document.getElementById("task-title").value = taskToEdit.titre;
+    title.value = taskToEdit.titre;
     document.getElementById("task-date").value = taskToEdit.date;
     document.getElementById("task-description").value = taskToEdit.description;
     
@@ -203,41 +214,36 @@ function editTask(taskId) {
 function editer() {
   event.preventDefault(); // Empêche la soumission du formulaire
 
-  const taskId = document.getElementById("task-id").value; 
-  const title = document.getElementById("task-title").value.trim();
-  const feature = document.getElementById('task-type-feature').checked;
-  const bug = document.getElementById('task-type-bug').checked;
+  let taskId = document.getElementById("task-id").value; 
+   
 
-  const taskType = feature ? "Feature" : (bug ? "Bug" : "");
-  const priority = document.getElementById("task-priority").value;
-  const status = document.getElementById("task-status").value;
-  const date = document.getElementById("task-date").value;
-  const description = document.getElementById("task-description").value;
+   taskType = feature.checked ? "Feature" : (bug.checked ? "Bug" : "");
+  
 
-  const taskIndex = array.findIndex(task => task.id === taskId);
+  
+  let taskIndex = array.findIndex(task => task.id === taskId);
   
   if (taskIndex !== -1) {
 
       array[taskIndex] = {
           id: taskId,
-          titre: title,
+          titre: title.value,
           features: taskType,
-          priority: priority,
-          status: status,
-          date: date,
-          description: description,
-      };
+          priority: priority.value,
+          status: slectedStatus.value,
+          date: date.value,
+          description: description.value,
+        };
 
       renderTasks(); 
 
 
       Swal.fire({
-          title: 'Task Updated!',
-          text: `You have updated the task: "${title}"`,
-          icon: 'success',
-          confirmButtonText: 'Nice!'
+        title: 'Task Updated!',
+        text: `You have updated the task: "${array[taskIndex].titre}"`,
+        icon: 'success',
+        confirmButtonText: 'Nice!'
       });
-      document.querySelector("#form-modal").reset()
       $('#form-modal').modal('hide'); 
   }
 }
@@ -246,3 +252,15 @@ function editer() {
 
 
 
+function showForm(){
+  document.querySelector('.modal-title').textContent = 'Add Task';
+        title.value = ""
+         taskType = ""
+        priority.value = ""
+        slectedStatus.value = ""
+        date.value = ""
+        description.value = ""
+
+      document.querySelector('#task-save-btn').style.display = 'block'
+      document.querySelector('#task-update-btn').style.display = 'none'
+}

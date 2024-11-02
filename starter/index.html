@@ -42,7 +42,7 @@
           </div>
 
           <div class="ms-auto">
-            <button class="boutton-ajouter-task btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#form-modal">
+            <button onclick="showForm()" class="boutton-ajouter-task btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#form-modal">
               + Add task
             </button>
           </div>
@@ -190,7 +190,7 @@
 					</div>
 					<div class="modal-footer">
 						<a href="#" class="btn btn-white" data-bs-dismiss="modal">Cancel</a>
-						<button type="submit" name="update" class="btn btn-warning task-action-btn" id="task-update-btn" onclick="editer()">Update</button>
+						<button type="submit" name="update" class="btn btn-warning task-action-btn" id="" onclick="editer()">Update</button>
             <button type="submit" name="add" class="btn btn-primary task-action-btn" id="task-save-btn" onclick="ajouter()" >Add</button>
 
 					</div>
@@ -207,7 +207,7 @@
       $(document).ready(function() {
           $('#form-modal').parsley();
       });
-  </script>
+    </script>
   
 
     <!-- ================== END core-js ================== -->
