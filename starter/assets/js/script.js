@@ -38,9 +38,8 @@ function addTask(titre, features,priority,status,date,description){
 }
 
 
-function ajouter() {
+function ajouter(event) {
   console.log("hellooo");
-  event.preventDefault(); // Empêche la soumission du formulaire
 
   let title = document.getElementById("task-title").value.trim();
   let feature = document.getElementById('task-type-feature').checked;
@@ -165,7 +164,7 @@ function deleteTask(taskId) {
           array = array.filter(task => task.id !== taskId);
           renderTasks();
 
-          // SweetAlert pour confirmer la suppression
+
           Swal.fire(
               'Deleted!',
               'Your task has been deleted.',
@@ -184,31 +183,65 @@ function editTask(taskId) {
     document.getElementById("task-date").value = taskToEdit.date;
     document.getElementById("task-description").value = taskToEdit.description;
     
-    // Définir le type de tâche
     if (taskToEdit.features === "Feature") {
       document.getElementById("task-type-feature").checked = true;
     } else {
       document.getElementById("task-type-bug").checked = true;
     }
     
-    // Définir priorité et statut
     document.getElementById("task-priority").value = taskToEdit.priority;
     document.getElementById("task-status").value = taskToEdit.status;
     
-    // Modifier le titre de la modal
     document.querySelector('.modal-title').textContent = 'Edit Task';
     document.querySelector('#task-save-btn').style.display = 'none'
-    // Afficher le modal
     $('#form-modal').modal('show');
   }
 
 
 }
 
-function editer(){
-  
+function editer() {
+  event.preventDefault(); // Empêche la soumission du formulaire
 
+  const taskId = document.getElementById("task-id").value; 
+  const title = document.getElementById("task-title").value.trim();
+  const feature = document.getElementById('task-type-feature').checked;
+  const bug = document.getElementById('task-type-bug').checked;
+
+  const taskType = feature ? "Feature" : (bug ? "Bug" : "");
+  const priority = document.getElementById("task-priority").value;
+  const status = document.getElementById("task-status").value;
+  const date = document.getElementById("task-date").value;
+  const description = document.getElementById("task-description").value;
+
+  const taskIndex = array.findIndex(task => task.id === taskId);
+  
+  if (taskIndex !== -1) {
+
+      array[taskIndex] = {
+          id: taskId,
+          titre: title,
+          features: taskType,
+          priority: priority,
+          status: status,
+          date: date,
+          description: description,
+      };
+
+      renderTasks(); 
+
+
+      Swal.fire({
+          title: 'Task Updated!',
+          text: `You have updated the task: "${title}"`,
+          icon: 'success',
+          confirmButtonText: 'Nice!'
+      });
+      document.querySelector("#form-modal").reset()
+      $('#form-modal').modal('hide'); 
+  }
 }
+
 
 
 
