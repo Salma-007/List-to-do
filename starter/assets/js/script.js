@@ -1,5 +1,6 @@
 
-let task_save_btn = document.getElementById("form-task");
+let task_save_btn = document.getElementById("task-save-btn");
+
 let task_title =  document.getElementById("task-title")
 let taskTypeFeature = document.getElementById('task-type-feature');
 let taskTypeBug = document.getElementById('task-type-bug');
@@ -37,7 +38,8 @@ function addTask(titre, features,priority,status,date,description){
 }
 
 
-task_save_btn.addEventListener("submit", function(event) {
+function ajouter() {
+  console.log("hellooo");
   event.preventDefault(); // Empêche la soumission du formulaire
 
   let title = document.getElementById("task-title").value.trim();
@@ -50,9 +52,9 @@ task_save_btn.addEventListener("submit", function(event) {
   let date = document.getElementById("task-date").value;
   let description = document.getElementById("task-description").value;
   addTask(title, taskType, priority, status, date, description);
-  task_save_btn.reset();
+  document.getElementById("form-task").reset();
 
-});
+};
 
 // pour loader les taches
 
@@ -203,6 +205,10 @@ function editTask(taskId) {
 
 }
 
+function editer(){
+  
+
+}
 
 
 
