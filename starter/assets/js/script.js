@@ -1,24 +1,26 @@
-// form var
+// form variables
 let title = document.getElementById("task-title")
 let feature = document.getElementById('task-type-feature')
 let bug = document.getElementById('task-type-bug')
-
 let taskType = feature ? "Feature" : (bug ? "Bug" : "");
 let priority = document.getElementById("task-priority")
 let slectedStatus = document.getElementById("task-status")
 let date = document.getElementById("task-date")
 let description = document.getElementById("task-description")
-// form var
+// end form varables
 
+//boutton add et update du modal
 let task_save_btn = document.getElementById("task-save-btn");
 let task_update_btn = document.getElementById("task-update-btn");
 
 let div_to_do = document.getElementById("to-do-tasks")
 let div_in_progress = document.getElementById("in-progress-tasks")
 let div_done = document.getElementById("done-tasks")
-let count_to_do = 0
-let count_in_progress = 0
-let count_done = 0
+let count_to_do 
+let count_in_progress 
+let count_done 
+
+// local storage
 let array = JSON.parse(localStorage.getItem("MyStorage")) || [];
 renderTasks()
 
@@ -62,12 +64,11 @@ function ajouter() {
   let statusValue = slectedStatus.value;
   let dateValue = date.value;
   let descriptionValue = description.value;
-  
-
 
   addTask(titleValue, taskType, priorityValue, statusValue, dateValue, descriptionValue);
   document.getElementById("form-task").reset();
   localStorage.setItem("MyStorage", JSON.stringify(array))
+  
 
 }
 
@@ -75,6 +76,11 @@ function ajouter() {
 // pour loader les taches
 
 function renderTasks() {
+
+  count_to_do = 0
+  count_in_progress = 0
+  count_done = 0
+
   div_to_do.innerHTML = '';
   div_in_progress.innerHTML = '';
   div_done.innerHTML = '';
@@ -83,7 +89,7 @@ function renderTasks() {
       
       let div0 = document.createElement('div')
       if(task.status == 'To Do'){
-        count_to_do++
+        count_to_do++;
       div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                 <a href="#" class="list-group-item list-group-item-action d-flex">
@@ -169,6 +175,9 @@ function renderTasks() {
       }
   })
   localStorage.setItem("MyStorage", JSON.stringify(array))
+  document.getElementById("to-do-tasks-count").innerHTML = `${count_to_do}`
+  document.getElementById("in-progress-tasks-count").innerHTML = `${count_in_progress}`
+  document.getElementById("done-tasks-count").innerHTML = `${count_done}`
 }
 
 // Fonction pour supprimer une tâche
@@ -216,10 +225,10 @@ function editTask(taskId) {
     document.getElementById("task-status").value = taskToEdit.status;
     
     document.querySelector('.modal-title').textContent = 'Edit Task';
-    document.querySelector('#task-save-btn').style.display = 'none'
+    task_update_btn.style.display = 'block'
+    task_save_btn.style.display = 'none'
     $('#form-modal').modal('show');
   }
-
 
 }
 
@@ -249,7 +258,6 @@ function editer() {
 
       renderTasks(); 
 
-
       Swal.fire({
         title: 'Task Updated!',
         text: `You have updated the task: "${array[taskIndex].titre}"`,
@@ -261,10 +269,6 @@ function editer() {
   localStorage.setItem("MyStorage", JSON.stringify(array))
 }
 
-
-
-
-
 function showForm(){
   document.querySelector('.modal-title').textContent = 'Add Task';
         title.value = ""
@@ -274,10 +278,7 @@ function showForm(){
         date.value = ""
         description.value = ""
 
-      document.querySelector('#task-save-btn').style.display = 'block'
-      document.querySelector('#task-update-btn').style.display = 'none'
+      task_save_btn.style.display = 'block'
+      task_update_btn.style.display = 'none'
 }
 
-document.getElementById("to-do-tasks-count").innerHTML = `${count_to_do}`
-document.getElementById("in-progress-tasks-count").innerHTML = `${count_in_progress}`
-document.getElementById("done-tasks-count").innerHTML = `${count_done}`
