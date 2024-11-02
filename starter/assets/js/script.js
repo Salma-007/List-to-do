@@ -54,6 +54,7 @@ function addTask(titre, features,priority,status,date,description){
 
 function ajouter() {
   console.log("hellooo");
+  if ($('#form-task').parsley().isValid()) {
 
   let titleValue = title.value.trim();
   let featureChecked = feature.checked;
@@ -68,7 +69,14 @@ function ajouter() {
   addTask(titleValue, taskType, priorityValue, statusValue, dateValue, descriptionValue);
   document.getElementById("form-task").reset();
   localStorage.setItem("MyStorage", JSON.stringify(array))
-  
+  }
+  else{
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "You didn't enter all the informations!",
+    });
+  }  
 
 }
 
@@ -85,7 +93,6 @@ function renderTasks() {
   div_in_progress.innerHTML = '';
   div_done.innerHTML = '';
   array.forEach(task => {
-    
       
       let div0 = document.createElement('div')
       if(task.status == 'To Do'){
@@ -118,7 +125,7 @@ function renderTasks() {
       div_to_do.appendChild(div0) }
 
       else if(task.status== 'In Progress'){
-        count_in_progress++
+        count_in_progress++;
           div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                 <a href="#" class="list-group-item list-group-item-action d-flex">
@@ -146,7 +153,7 @@ function renderTasks() {
       div_in_progress.appendChild(div0)
       }
       else if(task.status== 'Done'){
-        count_done++
+        count_done++;
           div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
                 <a href="#" class="list-group-item list-group-item-action d-flex">
@@ -175,6 +182,7 @@ function renderTasks() {
       }
   })
   localStorage.setItem("MyStorage", JSON.stringify(array))
+
   document.getElementById("to-do-tasks-count").innerHTML = `${count_to_do}`
   document.getElementById("in-progress-tasks-count").innerHTML = `${count_in_progress}`
   document.getElementById("done-tasks-count").innerHTML = `${count_done}`
@@ -194,8 +202,6 @@ function deleteTask(taskId) {
       if (result.isConfirmed) {
           array = array.filter(task => task.id !== taskId);
           renderTasks();
-
-
           Swal.fire(
               'Deleted!',
               'Your task has been deleted.',
@@ -236,11 +242,7 @@ function editer() {
   event.preventDefault(); // Empêche la soumission du formulaire
 
   let taskId = document.getElementById("task-id").value; 
-   
-
-   taskType = feature.checked ? "Feature" : (bug.checked ? "Bug" : "");
-  
-
+  taskType = feature.checked ? "Feature" : (bug.checked ? "Bug" : "");
   
   let taskIndex = array.findIndex(task => task.id === taskId);
   
@@ -268,6 +270,8 @@ function editer() {
   }
   localStorage.setItem("MyStorage", JSON.stringify(array))
 }
+
+// onclick of add task
 
 function showForm(){
   document.querySelector('.modal-title').textContent = 'Add Task';
