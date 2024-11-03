@@ -117,7 +117,7 @@ function renderTasks() {
                   </div>
                   <div>
                       <i class="fas fa-edit text-warning me-2" title="Edit" style="cursor: pointer;" onclick="editTask('${task.id}')"></i>
-                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" onclick="deleteTask('${task.id}')"></i>
+                      <i class="fas fa-trash text-danger" title="Delete" style="cursor: pointer;" onclick="deleteTask('${task.id}', event)"></i>
                     </div>
                 </a>
               </div>
@@ -190,13 +190,17 @@ function renderTasks() {
 
 
 
+// fonction onclick des taches
 
-function cliqueTask(taskId){
+function cliqueTask(taskId, event){
   editTask(taskId);
 }
 
+
+
 // Fonction pour supprimer une tâche
 function deleteTask(taskId) {
+  event.stopPropagation();
   Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -219,6 +223,9 @@ function deleteTask(taskId) {
       }
   });
 }
+
+
+// fonction d'icon editer task
 
 function editTask(taskId) {
 
@@ -247,6 +254,9 @@ function editTask(taskId) {
   }
 
 }
+
+
+// fonction d'edition des taches
 
 function editer() {
   event.preventDefault(); // Empêche la soumission du formulaire
