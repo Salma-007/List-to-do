@@ -21,6 +21,9 @@ let count_to_do
 let count_in_progress 
 let count_done 
 
+// clear storage
+// localStorage.clear();
+
 // local storage
 let array = JSON.parse(localStorage.getItem("MyStorage")) || [];
 renderTasks()
@@ -54,9 +57,7 @@ function addTask(titre, features,priority,status,date,description){
 // event onclick of add
 
 function ajouter() {
-
-  if ($('#form-task').parsley().isValid()) {
-
+  
   let titleValue = title.value.trim();
   let featureChecked = feature.checked;
   let bugChecked = bug.checked;
@@ -66,10 +67,9 @@ function ajouter() {
   let statusValue = slectedStatus.value;
   let dateValue = date.value;
   let descriptionValue = description.value;
-
+  if ($('#form-task').parsley().isValid()) {
   addTask(titleValue, taskType, priorityValue, statusValue, dateValue, descriptionValue);
   document.getElementById("form-task").reset();
-  localStorage.setItem("MyStorage", JSON.stringify(array))
   }
   else{
     Swal.fire({
@@ -182,7 +182,6 @@ function renderTasks() {
       div_done.appendChild(div0)
       }
   })
-  localStorage.setItem("MyStorage", JSON.stringify(array))
 
   document.getElementById("to-do-tasks-count").innerHTML = `${count_to_do}`
   document.getElementById("in-progress-tasks-count").innerHTML = `${count_in_progress}`
@@ -202,6 +201,8 @@ function deleteTask(taskId) {
   }).then((result) => {
       if (result.isConfirmed) {
           array = array.filter(task => task.id !== taskId);
+          localStorage.setItem("MyStorage", JSON.stringify(array))
+
           renderTasks();
           Swal.fire(
               'Deleted!',
@@ -210,10 +211,10 @@ function deleteTask(taskId) {
           );
       }
   });
-  localStorage.setItem("MyStorage", JSON.stringify(array))
 }
 
 function editTask(taskId) {
+
   let taskToEdit = array.find(task => task.id === taskId);
   
   if (taskToEdit) {
@@ -243,7 +244,6 @@ function editTask(taskId) {
 function editer() {
   event.preventDefault(); // Empêche la soumission du formulaire
 
-  
   let taskId = document.getElementById("task-id").value; 
   taskType = feature.checked ? "Feature" : (bug.checked ? "Bug" : "");
   
@@ -286,9 +286,10 @@ function editer() {
 // onclick of add task
 
 function showForm(){
+  $('#form-task').parsley().reset();
   document.querySelector('.modal-title').textContent = 'Add Task';
         title.value = ""
-         taskType = ""
+        taskType = ""
         priority.value = ""
         slectedStatus.value = ""
         date.value = ""
@@ -297,4 +298,5 @@ function showForm(){
       task_save_btn.style.display = 'block'
       task_update_btn.style.display = 'none'
 }
+
 
