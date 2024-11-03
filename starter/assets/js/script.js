@@ -100,7 +100,7 @@ function renderTasks() {
         count_to_do++;
       div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
-                <a href="#" class="list-group-item list-group-item-action d-flex">
+                <a href="#" class="list-group-item list-group-item-action d-flex" onclick = "cliqueTask('${task.id}')">
                   <div class="me-3 fs-16px">
                       <i class="far fa-question-circle text-gray-500 fa-fw"></i> 
                   </div>
@@ -129,7 +129,7 @@ function renderTasks() {
         count_in_progress++;
           div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
-                <a href="#" class="list-group-item list-group-item-action d-flex">
+                <a href="#" class="list-group-item list-group-item-action d-flex" onclick = "cliqueTask('${task.id}')">
                   <div class="me-3 fs-16px">
                       <i class="fas fa-spinner"></i>
                   </div>
@@ -157,7 +157,7 @@ function renderTasks() {
         count_done++;
           div0.innerHTML = `
           <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0">
-                <a href="#" class="list-group-item list-group-item-action d-flex">
+                <a href="#" class="list-group-item list-group-item-action d-flex" onclick = "cliqueTask('${task.id}')">
                   <div class="me-3 fs-16px">
                     <i class="fa-regular fa-circle-check"></i>
                   </div>
@@ -186,6 +186,13 @@ function renderTasks() {
   document.getElementById("to-do-tasks-count").innerHTML = `${count_to_do}`
   document.getElementById("in-progress-tasks-count").innerHTML = `${count_in_progress}`
   document.getElementById("done-tasks-count").innerHTML = `${count_done}`
+}
+
+
+
+
+function cliqueTask(taskId){
+  editTask(taskId);
 }
 
 // Fonction pour supprimer une tâche
