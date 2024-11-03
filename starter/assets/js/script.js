@@ -107,7 +107,7 @@ function renderTasks() {
                   <div class="flex-fill">
                     <div class="fs-14px lh-12 mb-2px fw-bold text-dark">${task.titre}</div>
                     <div class="mb-1 fs-12px">
-                      <div class="text-gray-600 flex-1">${task.date}</div>
+                      <div class="text-gray-600 flex-1">#created on ${task.date}</div>
                       <div class="text-gray-600 flex-1">${task.description}</div>
                     </div>
                     <div class="mb-1">
@@ -136,7 +136,7 @@ function renderTasks() {
                   <div class="flex-fill">
                     <div class="fs-14px lh-12 mb-2px fw-bold text-dark">${task.titre}</div>
                     <div class="mb-1 fs-12px">
-                      <div class="text-gray-600 flex-1">${task.date}</div>
+                      <div class="text-gray-600 flex-1">#created on ${task.date}</div>
                       <div class="text-gray-600 flex-1">${task.description}</div>
                     </div>
                     <div class="mb-1">
@@ -164,7 +164,7 @@ function renderTasks() {
                   <div class="flex-fill">
                     <div class="fs-14px lh-12 mb-2px fw-bold text-dark">${task.titre}</div>
                     <div class="mb-1 fs-12px">
-                      <div class="text-gray-600 flex-1">${task.date}</div>
+                      <div class="text-gray-600 flex-1">#created on ${task.date}</div>
                       <div class="text-gray-600 flex-1">${task.description}</div>
                     </div>
                     <div class="mb-1">
